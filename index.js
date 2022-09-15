@@ -3,15 +3,18 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
 dotenv.config()
-import onError from "./utils/onError.js";
+import onError from './utils/onError.js'
+import router from './router/index.js'
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 8000
 
 const server = express()
 
 server.use(cors({
     origin: process.env.ALLOWED_ORIGIN
 }))
+
+server.use('/api', router)
 
 try {
     await mongoose.connect(process.env.MONGODB_URI, {
@@ -26,6 +29,7 @@ try {
 
 server.listen(PORT, () => {
     console.log(`Server started, port: ${PORT}`)
+    console.log(process.env.PORT)
 })
 
 
