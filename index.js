@@ -3,7 +3,6 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
 dotenv.config()
-import onError from './utils/onError.js'
 import router from './router/index.js'
 
 const PORT = process.env.PORT || 8000
@@ -24,12 +23,11 @@ try {
         console.log('Connected to DB')
     })
 } catch (e) {
-    onError(e)
+    console.log(e)
 }
 
 server.listen(PORT, () => {
     console.log(`Server started, port: ${PORT}`)
-    console.log(process.env.PORT)
 })
 
 
