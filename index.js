@@ -1,9 +1,11 @@
-import express from 'express'
+import express, { json, urlencoded } from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
-dotenv.config()
 import router from './router/index.js'
+import cookieParser from 'cookie-parser'
+
+dotenv.config()
 
 const PORT = process.env.PORT || 8000
 
@@ -12,7 +14,9 @@ const server = express()
 server.use(cors({
     origin: process.env.ALLOWED_ORIGIN
 }))
-
+server.use(json())
+server.use(urlencoded({ extended: true }))
+server.use(cookieParser())
 server.use('/api', router)
 
 try {

@@ -11,12 +11,14 @@ export const verifyAccess = async (req, res, next) => {
     }
 
     try {
+
         const decoded = await verifyToken(accessToken, process.env.TOKEN_SECRET)
         if (!decoded) {
             return res.status(403).json({ message: 'Invalid access token' })
         }
         req.user = decoded
         next()
+
     } catch (e) {
         if (e.name === 'TokenExpiredError') {
             return res.status(401).json({ message: 'Access token has been expired' })
