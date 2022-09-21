@@ -3,12 +3,13 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import router from './router/index.js'
 import cookieParser from 'cookie-parser'
-import { PORT, ALLOWED_ORIGIN, MONGODB_URI } from './constants.js'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const server = express()
 
 server.use(cors({
-    origin: ALLOWED_ORIGIN,
+    origin: process.env.ALLOWED_ORIGIN,
     credentials: true
 }))
 server.use(json())
@@ -17,7 +18,7 @@ server.use(cookieParser())
 server.use('/api', router)
 
 try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }, () => {
@@ -27,8 +28,8 @@ try {
     console.log(e)
 }
 
-server.listen(PORT || 8000, () => {
-    console.log(`Server started, port: ${PORT}`)
+server.listen(process.env.PORT || 8000, () => {
+    console.log(`Server started`)
 })
 
 

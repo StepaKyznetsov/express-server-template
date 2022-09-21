@@ -1,5 +1,6 @@
 import { verifyToken } from '../utils/tokens.js'
-import { TOKEN_SECRET } from '../constants.js'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 export const verifyAccess = async (req, res, next) => {
 
@@ -11,7 +12,7 @@ export const verifyAccess = async (req, res, next) => {
 
     try {
 
-        const decoded = await verifyToken(accessToken, TOKEN_SECRET)
+        const decoded = await verifyToken(accessToken, process.env.TOKEN_SECRET)
         if (!decoded) {
             return res.status(403).json({ message: 'Invalid access token' })
         }
