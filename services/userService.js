@@ -1,5 +1,6 @@
 import UserSchema from '../models/user.js'
 import bcrypt from 'bcrypt'
+import { COOKIE } from '../constants.js'
 
 export const registration = async (res, req, next) => {
 
@@ -51,7 +52,8 @@ export const login = async (res, req, next) => {
     }
 }
 
-export const logout = () => {
-
+export const logout = (req, res, next) => {
+    res.clearCookie(COOKIE)
+    res.status(200).json({ message: 'User logged out' })
 }
 

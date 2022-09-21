@@ -2,7 +2,7 @@ export const verifyPermission = async (req, res, next) => {
 
     const user = req.user
 
-    if (!user) return res.status(403).json({ message: 'Cant find active user'})
+    if (!user) return res.status(403).json({ message: `Can't find active user`})
 
     if (!user.role || user.role !== 'ADMIN') {
         return res

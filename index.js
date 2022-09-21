@@ -1,18 +1,15 @@
 import express, { json, urlencoded } from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import * as dotenv from 'dotenv'
 import router from './router/index.js'
 import cookieParser from 'cookie-parser'
-
-dotenv.config()
-
-const PORT = process.env.PORT || 8000
+import { PORT, ALLOWED_ORIGIN, MONGODB_URI } from './constants.js'
 
 const server = express()
 
 server.use(cors({
-    origin: process.env.ALLOWED_ORIGIN
+    origin: ALLOWED_ORIGIN,
+    credentials: true
 }))
 server.use(json())
 server.use(urlencoded({ extended: true }))
@@ -20,7 +17,7 @@ server.use(cookieParser())
 server.use('/api', router)
 
 try {
-    await mongoose.connect(process.env.MONGODB_URI, {
+    await mongoose.connect(MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }, () => {
@@ -30,7 +27,7 @@ try {
     console.log(e)
 }
 
-server.listen(PORT, () => {
+server.listen(PORT || 8000, () => {
     console.log(`Server started, port: ${PORT}`)
 })
 

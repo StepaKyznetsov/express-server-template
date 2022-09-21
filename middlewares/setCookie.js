@@ -1,7 +1,5 @@
-import dotenv from 'dotenv'
 import { signToken } from '../utils/tokens.js'
-
-dotenv.config()
+import { TOKEN_SECRET, COOKIE, PRIVATE_KEY} from '../constants.js'
 
 export const setCookie = async (req, res, next) => {
 
@@ -13,7 +11,7 @@ export const setCookie = async (req, res, next) => {
 
         const accessToken = await signToken(
             { userId: user.userId, role: user.role },
-            process.env.TOKEN_SECRET,
+            TOKEN_SECRET,
             {
                 expiresIn: '30m'
             }
@@ -21,12 +19,12 @@ export const setCookie = async (req, res, next) => {
 
         let refreshToken
         if (!req.cookies[process.env.COOKIE]) {
-            refreshToken = await signToken({ userId: user.userId }, process.env.PRIVATE_KEY, {
+            refreshToken = await signToken({ userId: user.userId }, PRIVATE_KEY, {
                 algorithm: 'RS256',
                 expiresIn: '7d'
             })
 
-            res.cookie(process.env.COOKIE, refreshToken, {
+            res.cookie(COOKIE, refreshToken, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none'

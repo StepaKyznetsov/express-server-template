@@ -5,7 +5,7 @@ import {verifyAccess} from '../middlewares/verifyAccess.js'
 const userRouter = express.Router()
 
 userRouter
-    .post('/reg', registration)
+    .post('/registration', registration)
     .post('/login', login)
     .get('/logout', verifyAccess, logout)
 
