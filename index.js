@@ -1,5 +1,6 @@
 import express, { json, urlencoded } from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
 import mongoose from 'mongoose'
 import router from './router/index.js'
 import cookieParser from 'cookie-parser'
@@ -12,6 +13,7 @@ server.use(cors({
     origin: process.env.ALLOWED_ORIGIN,
     credentials: true
 }))
+server.use(helmet())
 server.use(json())
 server.use(urlencoded({ extended: true }))
 server.use(cookieParser())

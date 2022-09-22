@@ -1,10 +1,9 @@
-import express from 'express'
+import { Router } from 'express'
 import userRouter from './userRouter.js'
-import * as dotenv from 'dotenv'
-dotenv.config()
+import { setCookie } from '../middlewares/setCookie.js'
 
-const router = express.Router()
+const router = Router()
 
-router.use('/user', userRouter).use(process.env.setCookie)
+router.use('/user', userRouter).use(setCookie)
 
 export default router
