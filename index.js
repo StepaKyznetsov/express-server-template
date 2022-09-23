@@ -9,15 +9,16 @@ dotenv.config()
 
 const server = express()
 
-server.use(cors({
+server
+    .use(cors({
     origin: process.env.ALLOWED_ORIGIN,
     credentials: true
 }))
-server.use(helmet())
-server.use(json())
-server.use(urlencoded({ extended: true }))
-server.use(cookieParser())
-server.use('/api', router)
+    .use(helmet())
+    .use(json())
+    .use(urlencoded({ extended: true }))
+    .use(cookieParser())
+    .use('/api', router)
 
 try {
     await mongoose.connect(process.env.MONGODB_URI, {

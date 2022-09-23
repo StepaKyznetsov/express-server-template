@@ -26,7 +26,7 @@ export const setCookie = async (req, res, next) => {
                 },
                 process.env.PRIVATE_KEY,
                 {
-                expiresIn: '7d'
+                    expiresIn: '7d'
                 }
             )
             res.cookie(process.env.COOKIE, refreshToken, {

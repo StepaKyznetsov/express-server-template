@@ -27,7 +27,7 @@ export const registration = async (req, res, next) => {
 
     try {
         const isAlreadyExist = await UserSchema.findOne({ email })
-        if (isAlreadyExist === []) return res.status(409).json({ message: 'This email is already taken' })
+        if (isAlreadyExist) return res.status(409).json({ message: 'This email is already taken' })
 
         const hashedPassword = await argon2.hash(password)
 
